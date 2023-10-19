@@ -5,7 +5,12 @@ export const ToastContext = createContext();
 function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
 
-  function addToast(newToast) {
+  function addToast(message, variant) {
+    const newToast = {
+      id: crypto.randomUUID(),
+      message,
+      variant,
+    };
     setToasts((toasts) => [...toasts, newToast]);
   }
 

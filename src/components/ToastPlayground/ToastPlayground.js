@@ -11,19 +11,12 @@ const VARIANT_OPTIONS = ["notice", "warning", "success", "error"];
 function ToastPlayground() {
   const [message, setMessage] = useState("");
   const [variant, setVariant] = useState(VARIANT_OPTIONS[0]);
-  const { addToast, removeToast } = useContext(ToastContext);
+  const { addToast } = useContext(ToastContext);
 
   function handleSubmit(event) {
     event.preventDefault();
-    const id = crypto.randomUUID();
-    const newToast = {
-      id,
-      message,
-      variant,
-      handleDismiss: () => removeToast(id),
-    };
 
-    addToast(newToast);
+    addToast(message, variant);
     setMessage("");
     setVariant(VARIANT_OPTIONS[0]);
   }
