@@ -1,9 +1,24 @@
-import React, { createContext, useMemo, useState } from "react";
+import React, { createContext, useEffect, useMemo, useState } from "react";
 
 export const ToastContext = createContext();
 
 function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
+
+  useEffect(() => {
+    function handleKeydown(event) {
+      if (event.code !== "Escape") {
+        return;
+      }
+      setToasts([]);
+    }
+
+    window.addEventListener("keydown", handleKeydown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeydown);
+    };
+  }, []);
 
   function addToast(message, variant) {
     const newToast = {
@@ -18,16 +33,11 @@ function ToastProvider({ children }) {
     setToasts((toasts) => toasts.filter((t) => t.id !== id));
   }
 
-  function dismissAllToasts() {
-    setToasts([]);
-  }
-
   const value = useMemo(
     () => ({
       toasts,
       addToast,
       removeToast,
-      dismissAllToasts,
     }),
     [toasts]
   );

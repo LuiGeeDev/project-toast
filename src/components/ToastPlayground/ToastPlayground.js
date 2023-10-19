@@ -11,7 +11,7 @@ const VARIANT_OPTIONS = ["notice", "warning", "success", "error"];
 function ToastPlayground() {
   const [message, setMessage] = useState("");
   const [variant, setVariant] = useState(VARIANT_OPTIONS[0]);
-  const { addToast, dismissAllToasts } = useContext(ToastContext);
+  const { addToast } = useContext(ToastContext);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -20,21 +20,6 @@ function ToastPlayground() {
     setMessage("");
     setVariant(VARIANT_OPTIONS[0]);
   }
-
-  useEffect(() => {
-    function handleKeydown(event) {
-      if (event.code !== "Escape") {
-        return;
-      }
-      dismissAllToasts();
-    }
-
-    window.addEventListener("keydown", handleKeydown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeydown);
-    };
-  }, [dismissAllToasts]);
 
   return (
     <div className={styles.wrapper}>
