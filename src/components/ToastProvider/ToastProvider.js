@@ -18,11 +18,16 @@ function ToastProvider({ children }) {
     setToasts((toasts) => toasts.filter((t) => t.id !== id));
   }
 
+  function dismissAllToasts() {
+    setToasts([]);
+  }
+
   const value = useMemo(
     () => ({
       toasts,
       addToast,
       removeToast,
+      dismissAllToasts,
     }),
     [toasts]
   );
